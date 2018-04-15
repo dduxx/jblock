@@ -1,5 +1,7 @@
 package com.dduxx.jblock;
 
+import com.dduxx.jblock.blockchain.Data;
+
 public class Person extends Data {
     
     private String firstName;

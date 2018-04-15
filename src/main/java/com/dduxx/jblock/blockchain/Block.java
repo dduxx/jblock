@@ -1,6 +1,5 @@
-package com.dduxx.jblock;
+package com.dduxx.jblock.blockchain;
 
-import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -82,10 +81,10 @@ public class Block {
             log.info("using: " + Block.DIGEST_ALGORITHM + " to build hash");
             MessageDigest digest = MessageDigest.getInstance(Block.DIGEST_ALGORITHM);
             
-            ByteBuffer buffer = ByteBuffer.allocate(Long.BYTES);
-            buffer.putLong(timestamp);
-            
-            return digest.digest(Data.appender(previous, data.dataToBytes(), buffer.array()));
+            return digest.digest(Data.appender(
+                    previous, 
+                    data.dataToBytes(), 
+                    Data.asBytes(timestamp)));
             
         } catch(NoSuchAlgorithmException e) {
             log.error("no hashing algorithim existed for given: " + Block.DIGEST_ALGORITHM, e);

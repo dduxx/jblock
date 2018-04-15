@@ -3,6 +3,8 @@ package com.dduxx.jblock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.dduxx.jblock.blockchain.Block;
+
 public class TestMain {
     private static final Logger log = LoggerFactory.getLogger(TestMain.class);
     
