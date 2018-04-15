@@ -80,14 +80,14 @@ public class Block {
             return "Block["
                     + "hash=" + Data.bytesToHex(hash) 
                     + ", data=" + data.toString() 
-                    + ", time=" + timestamp + "]"
-                    + ", prev=[NONE]";
+                    + ", time=" + timestamp
+                    + ", prev=[NONE]]";
         }{
             return "Block["
                     + "hash=" + Data.bytesToHex(hash) 
                     + ", data=" + data.toString() 
-                    + ", time=" + timestamp + "]"
-                    + ", prev=" + Data.bytesToHex(previous.getHash());
+                    + ", time=" + timestamp
+                    + ", prev=" + Data.bytesToHex(previous.getHash()) + "]";
         }
     }
     
