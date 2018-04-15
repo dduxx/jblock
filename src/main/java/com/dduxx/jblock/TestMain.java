@@ -3,25 +3,23 @@ package com.dduxx.jblock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.dduxx.jblock.blockchain.Block;
-
 public class TestMain {
     private static final Logger log = LoggerFactory.getLogger(TestMain.class);
     
     public static void main(String[] args) {
         Block first = new Block(
                 new byte[] {}, 
-                new Person("foo", "bar", "foo@bar.com"), 
+                new TestTransaction(1L, true, 29.99), 
                 System.currentTimeMillis());
         
         Block second = new Block(
                 first.getHash(), 
-                new Person("john", "doe", "john@doe.com"), 
+                new TestTransaction(2L, false, 31.99), 
                 System.currentTimeMillis());
         
         Block third = new Block(
                 second.getHash(),
-                new Person("jane", "doe", "jane@doe.com"),
+                new TestTransaction(3L, true, 21.29),
                 System.currentTimeMillis());
         
         log.info(first.toString());

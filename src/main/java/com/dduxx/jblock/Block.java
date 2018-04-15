@@ -1,4 +1,4 @@
-package com.dduxx.jblock.blockchain;
+package com.dduxx.jblock;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,6 +26,10 @@ public class Block {
         this.data = data;
         this.timestamp = timestamp;
         this.hash = Block.calculateHash(previous, data, timestamp);
+    }
+    
+    public Block(byte[] previous, Data data) {
+        this(previous, data, System.currentTimeMillis());        
     }
 
     public byte[] getHash() {
@@ -78,7 +82,6 @@ public class Block {
      */
     public static byte[] calculateHash(byte[] previous, Data data, long timestamp) {
         try {
-            log.info("using: " + Block.DIGEST_ALGORITHM + " to build hash");
             MessageDigest digest = MessageDigest.getInstance(Block.DIGEST_ALGORITHM);
             
             return digest.digest(Data.appender(

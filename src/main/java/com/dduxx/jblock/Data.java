@@ -1,4 +1,4 @@
-package com.dduxx.jblock.blockchain;
+package com.dduxx.jblock;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class Data {
     
-    private static Logger log = LoggerFactory.getLogger(Data.class);
+    protected static Logger log = LoggerFactory.getLogger(Data.class);
     
     /**
      * convert whatever information is in your data to a byte array. used to help in hash 
