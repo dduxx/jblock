@@ -42,12 +42,26 @@ public class Chain {
     
     public void add(Data data, long timestamp) {
         if(head == null) {
-            Block block = new Block(null, data, timestamp, null);
+            Block block = new Block(null, data, timestamp);
             head = block;
             tail = head;
         }
         else {
             Block block = new Block(tail, data, timestamp);
+            tail.setPrevious(block);
+            tail = block;
+        }
+        length++;
+    }
+    
+    public void add(Data data, long timestamp, String DIGEST_ALGORITHM) {
+        if(head == null) {
+            Block block = new Block(null, data, timestamp, null, DIGEST_ALGORITHM);
+            head = block;
+            tail = head;
+        }
+        else {
+            Block block = new Block(tail, data, timestamp, null, DIGEST_ALGORITHM);
             tail.setPrevious(block);
             tail = block;
         }
