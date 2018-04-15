@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.dduxx</groupId>
   <artifactId>jblock</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <name>jblock</name>
   <description>simple experimentation with a block chain in java</description>
   <dependencies>

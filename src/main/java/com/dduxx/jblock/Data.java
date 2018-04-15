@@ -19,11 +19,12 @@ public abstract class Data {
     protected static Logger log = LoggerFactory.getLogger(Data.class);
     
     /**
-     * convert whatever information is in your data to a byte array. used to help in hash 
-     *     calculations
-     * @return data representation in bytes
+     * method should convert whatever data you want to make immutable in the data block into a 
+     *     byte[]. this is the part of the Data within the block that will be used to calculate
+     *     the hash. convenience methods are included to help with this conversion. see asBytes()
+     * @return byte[] representation of the data which you want to use to calculate the hash
      */
-    public abstract byte[] dataToBytes();
+    public abstract byte[] buildImmutableBytes();
     
     /**
      * convenience method that appends all byte arrays into a single byte array

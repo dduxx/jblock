@@ -7,23 +7,12 @@ public class TestMain {
     private static final Logger log = LoggerFactory.getLogger(TestMain.class);
     
     public static void main(String[] args) {
-        Block first = new Block(
-                new byte[] {}, 
-                new TestTransaction(1L, true, 29.99), 
-                System.currentTimeMillis());
+        Chain chain = new Chain();
         
-        Block second = new Block(
-                first.getHash(), 
-                new TestTransaction(2L, false, 31.99), 
-                System.currentTimeMillis());
+        chain.add(new TestTransaction(1L, true, 29.99));
+        chain.add(new TestTransaction(2L, false, 31.99));
+        chain.add(new TestTransaction(3L, true, 21.29));
         
-        Block third = new Block(
-                second.getHash(),
-                new TestTransaction(3L, true, 21.29),
-                System.currentTimeMillis());
-        
-        log.info(first.toString());
-        log.info(second.toString());
-        log.info(third.toString());
+        log.info(chain.toString());
     }
 }

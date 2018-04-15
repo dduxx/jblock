@@ -55,7 +55,7 @@ public class TestTransaction extends Data{
     }
 
     @Override
-    public byte[] dataToBytes() {
+    public byte[] buildImmutableBytes() {
         return Data.appender(Data.asBytes(transactionId), 
                 Data.asBytes(transactionResult), 
                 Data.asBytes(price));

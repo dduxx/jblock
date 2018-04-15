@@ -16,28 +16,30 @@ public class Block {
     
     private static Logger log = LoggerFactory.getLogger(Block.class);
     
+    private Block previous;
     private byte[] hash;
     private Data data;
-    private byte[] previous;
     private long timestamp;
+    private Block next;
     
-    public Block(byte[] previous, Data data, long timestamp) {
+    
+    public Block(Block previous, Data data, long timestamp, Block next) {
         this.previous = previous;
         this.data = data;
         this.timestamp = timestamp;
         this.hash = Block.calculateHash(previous, data, timestamp);
     }
     
-    public Block(byte[] previous, Data data) {
-        this(previous, data, System.currentTimeMillis());        
+    public Block(Block previous, Data data, long timestamp) {
+        this(previous, data, timestamp, null);
+    }
+    
+    public Block(Block previous, Data data) {
+        this(previous, data, System.currentTimeMillis(), null);
     }
 
     public byte[] getHash() {
         return hash;
-    }
-
-    public void setHash(byte[] hash) {
-        this.hash = hash;
     }
 
     public Data getData() {
@@ -48,11 +50,11 @@ public class Block {
         this.data = data;
     }
 
-    public byte[] getPrevious() {
+    public Block getPrevious() {
         return previous;
     }
 
-    public void setPrevious(byte[] previous) {
+    public void setPrevious(Block previous) {
         this.previous = previous;
     }
     
@@ -64,13 +66,29 @@ public class Block {
         return this.timestamp;
     }
     
+    public Block getNext() {
+        return next;
+    }
+
+    public void setNext(Block next) {
+        this.next = next;
+    }
+
     @Override
     public String toString() {
-        return "Block["
-                + "hash=" + Data.bytesToHex(hash) 
-                + ", data=" + data.toString() 
-                + ", prev=" + Data.bytesToHex(previous) 
-                + ", time=" + timestamp + "]";
+        if(previous == null) {
+            return "Block["
+                    + "hash=" + Data.bytesToHex(hash) 
+                    + ", data=" + data.toString() 
+                    + ", time=" + timestamp + "]"
+                    + ", prev=[NONE]";
+        }{
+            return "Block["
+                    + "hash=" + Data.bytesToHex(hash) 
+                    + ", data=" + data.toString() 
+                    + ", time=" + timestamp + "]"
+                    + ", prev=" + Data.bytesToHex(previous.getHash());
+        }
     }
     
     /**
@@ -80,20 +98,27 @@ public class Block {
      * @param timestamp when the block was created
      * @return the hash for this block as a byte array
      */
-    public static byte[] calculateHash(byte[] previous, Data data, long timestamp) {
+    public static byte[] calculateHash(Block previous, Data data, long timestamp) {
         try {
             MessageDigest digest = MessageDigest.getInstance(Block.DIGEST_ALGORITHM);
             
-            return digest.digest(Data.appender(
-                    previous, 
-                    data.dataToBytes(), 
-                    Data.asBytes(timestamp)));
+            if(previous == null) {
+                return digest.digest(Data.appender(
+                        new byte[] {0}, 
+                        data.buildImmutableBytes(), 
+                        Data.asBytes(timestamp)));
+            }
+            else {
+                return digest.digest(Data.appender(
+                        previous.getHash(), 
+                        data.buildImmutableBytes(), 
+                        Data.asBytes(timestamp)));
+            }
             
         } catch(NoSuchAlgorithmException e) {
             log.error("no hashing algorithim existed for given: " + Block.DIGEST_ALGORITHM, e);
             throw new RuntimeException(e);
         }
-        
         
     }
     
