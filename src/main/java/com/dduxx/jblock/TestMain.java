@@ -14,5 +14,10 @@ public class TestMain {
         chain.add(new TestTransaction(3L, true, 21.29));
         
         log.info(chain.toString());
+        
+        log.info(chain.get(0).toString());
+        log.info(chain.get(2).toString());
+        log.info(chain.get(1).toString());
+        
     }
 }

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * date: 2018-04-14
  */
 public class Block {
-    public static final String  DEFAULT_DIGEST_ALGORITHM = "SHA-256";
+    public static final String  DEFAULT_HASH_ALGORITHM = "SHA-256";
     
     private static Logger log = LoggerFactory.getLogger(Block.class);
     
@@ -23,19 +23,19 @@ public class Block {
     private Block next;
     
     
-    public Block(Block previous, Data data, long timestamp, Block next, String DIGEST_ALGORITHM) {
+    public Block(Block previous, Data data, long timestamp, Block next, String HASH_ALGORITHM) {
         this.previous = previous;
         this.data = data;
         this.timestamp = timestamp;
-        this.hash = Block.calculateHash(previous, data, timestamp, DIGEST_ALGORITHM);
+        this.hash = Block.calculateHash(previous, data, timestamp, HASH_ALGORITHM);
     }
     
     public Block(Block previous, Data data, long timestamp) {
-        this(previous, data, timestamp, null, Block.DEFAULT_DIGEST_ALGORITHM);
+        this(previous, data, timestamp, null, Block.DEFAULT_HASH_ALGORITHM);
     }
     
     public Block(Block previous, Data data) {
-        this(previous, data, System.currentTimeMillis(), null, Block.DEFAULT_DIGEST_ALGORITHM);
+        this(previous, data, System.currentTimeMillis(), null, Block.DEFAULT_HASH_ALGORITHM);
     }
 
     public byte[] getHash() {
@@ -102,9 +102,9 @@ public class Block {
             Block previous, 
             Data data, 
             long timestamp, 
-            String DIGEST_ALGORITHM) {
+            String HASH_ALGORITHM) {
         try {
-            MessageDigest digest = MessageDigest.getInstance(DIGEST_ALGORITHM);
+            MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
             
             if(previous == null) {
                 return digest.digest(Data.appender(
@@ -120,7 +120,7 @@ public class Block {
             }
             
         } catch(NoSuchAlgorithmException e) {
-            log.error("no hashing algorithim existed for given: " + DIGEST_ALGORITHM, e);
+            log.error("no hashing algorithim existed for given: " + HASH_ALGORITHM, e);
             throw new RuntimeException(e);
         }
         
