@@ -4,6 +4,10 @@
   <artifactId>jblock</artifactId>
   <version>0.0.3</version>
   <name>jblock</name>
+  <properties>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+  </properties>
   <description>simple experimentation with a block chain in java</description>
   <dependencies>
   	<dependency>
