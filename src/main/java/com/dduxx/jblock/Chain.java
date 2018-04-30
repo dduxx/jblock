@@ -1,6 +1,7 @@
 package com.dduxx.jblock;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -55,7 +56,7 @@ public class Chain {
         }
         else {
             Block block = new Block(tail, data, timestamp);
-            tail.setPrevious(block);
+            tail.setNext(block);
             tail = block;
         }
         length++;
@@ -69,10 +70,18 @@ public class Chain {
         }
         else {
             Block block = new Block(tail, data, timestamp, null, DIGEST_ALGORITHM);
-            tail.setPrevious(block);
+            tail.setNext(block);
             tail = block;
         }
         length++;
+    }
+    
+    public Block getHead() {
+        return this.head;
+    }
+    
+    public Block getTail() {
+        return this.tail;
     }
     
     @Override
@@ -141,5 +150,26 @@ public class Chain {
             current = current.getNext();
         }
         return list;
+    }
+    
+    /**
+     * compare two Block chains based on the hash values. returns true if the chains are the same
+     *     false otherwise
+     * @param a
+     * @param b
+     * @return true if chains are the same, false otherwise
+     */
+    public static boolean resolve(Chain a, Chain b) {
+        boolean equal = a.length() == b.length();
+        Block currentA = a.getHead();
+        Block currentB = b.getHead();
+        while(currentA!=null && currentB!=null && equal) {
+            log.info("comparing " + Data.bytesToHex(currentA.getHash()) + " to " 
+                    + Data.bytesToHex(currentB.getHash()));            
+            equal = equal && Arrays.equals(currentA.getHash(), currentB.getHash());
+            currentA = currentA.getNext();
+            currentB = currentB.getNext();
+        }
+        return equal;
     }
 }

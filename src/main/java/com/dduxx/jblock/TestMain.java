@@ -9,15 +9,16 @@ public class TestMain {
     public static void main(String[] args) {
         Chain chain = new Chain();
         
-        chain.add(new TestTransaction(1L, true, 29.99));
-        chain.add(new TestTransaction(2L, false, 31.99));
-        chain.add(new TestTransaction(3L, true, 21.29));
+        chain.add(new TestTransaction(1L, true, 29.99), 4L);
+        chain.add(new TestTransaction(2L, false, 31.99), 5L);
+        chain.add(new TestTransaction(3L, true, 21.29), 6L);
         
-        log.info(chain.toString());
+        Chain chainb = new Chain();
+        chainb.add(new TestTransaction(1L, true, 29.99), 4L);
+        chainb.add(new TestTransaction(2L, false, 31.99), 5L);
+        chainb.add(new TestTransaction(3L, true, 21.29), 6L);
         
-        log.info(chain.get(0).toString());
-        log.info(chain.get(2).toString());
-        log.info(chain.get(1).toString());
+        log.info("same? " + Chain.resolve(chain, chainb));
         
     }
 }

@@ -73,6 +73,10 @@ public class Block {
     public void setNext(Block next) {
         this.next = next;
     }
+    
+    public boolean hasNext() {
+        return next != null;
+    }
 
     @Override
     public String toString() {
