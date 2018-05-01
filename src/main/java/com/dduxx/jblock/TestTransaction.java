@@ -61,4 +61,18 @@ public class TestTransaction extends Data{
                 Data.asBytes(price));
     }
 
+
+    //TODO: implement this
+    @Override
+    public String toJson() {
+        return "incomplete";
+    }
+
+
+    //TODO: implement this
+    @Override
+    public Data fromJson() {
+        return new TestTransaction(1L, false, 0.0);
+    }
+
 }
