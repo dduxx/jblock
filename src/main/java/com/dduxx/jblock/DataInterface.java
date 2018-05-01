@@ -1,5 +1,11 @@
 package com.dduxx.jblock;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+
 public interface DataInterface {
 
     /**
@@ -13,12 +19,18 @@ public interface DataInterface {
     /**
      * should return a json formatted string of the data
      * @return a json string
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonGenerationException 
      */
-    public String toJson();
+    public String toJson() throws JsonGenerationException, JsonMappingException, IOException;
     
     /**
      * maps from json to the data object
      * @return the object
+     * @throws IOException 
+     * @throws JsonMappingException 
+     * @throws JsonParseException 
      */
-    public Data fromJson();
+    public Data fromJson(String json) throws JsonParseException, JsonMappingException, IOException;
 }
